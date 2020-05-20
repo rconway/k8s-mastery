@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+microk8s.kubectl attach --namespace=shpod -ti shpod
