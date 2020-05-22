@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-microk8s.kubectl attach --namespace=shpod -ti shpod
+# Create the pod
+#kubectl apply -f https://bret.run/shpod.yml
+#kubectl apply -f shpod.yml
+
+# Connect to pod
+kubectl attach --namespace=shpod -it shpod
