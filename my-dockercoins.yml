@@ -1,0 +1,193 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis
+    spec:
+      containers:
+        - image: redis
+          name: redis
+          resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hasher
+  name: hasher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasher
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: hasher
+    spec:
+      containers:
+        - image: dockercoins/hasher:v0.1
+          name: hasher
+          resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rng
+  name: rng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rng
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rng
+    spec:
+      containers:
+        - image: dockercoins/rng:v0.1
+          name: rng
+          resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webui
+  name: webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webui
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webui
+    spec:
+      containers:
+        - image: dockercoins/webui:v0.1
+          name: webui
+          resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: worker
+  name: worker
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: worker
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: worker
+    spec:
+      containers:
+        - image: dockercoins/worker:v0.1
+          name: worker
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis
+  name: redis
+spec:
+  ports:
+    - port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: redis
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rng
+  name: rng
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: rng
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hasher
+  name: hasher
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: hasher
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webui
+  name: webui
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: webui
+  type: NodePort
+status:
+  loadBalancer: {}

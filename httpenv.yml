@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: httpenv
+  name: httpenv
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: httpenv
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: httpenv
+    spec:
+      containers:
+        - image: bretfisher/httpenv
+          name: httpenv
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: httpenv
+  name: httpenv
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8888
+  selector:
+    app: httpenv
+  type: LoadBalancer
+status:
+  loadBalancer: {}
