@@ -14,8 +14,18 @@ sudo snap install microk8s --channel=1.17/stable --classic
 # Add current user to the group
 sudo usermod -a -G microk8s $USER
 
-# Alias for .bashrc
+# kubectl
+#
+# Use the microk8s version (via alias for convenience)
 alias kubectl='microk8s.kubectl'
+# Install latest version
+curl -Lo $HOME/.local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl \
+  && chmod +x $HOME/.local/bin/kubectl
+# Install specific version - v1.17
+sudo snap install kubectl --channel=1.17/stable --classic
+
+# kubectl bash completion
+echo "source <(kubectl completion bash)" >>$HOME/.bash_completion
 
 # core extensions
 microk8s enable dns dashboard ingress
