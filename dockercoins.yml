@@ -89,6 +89,26 @@ spec:
         - image: dockercoins/rng:v0.1
           name: rng
 ---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: rng
+  name: rng
+spec:
+  selector:
+    matchLabels:
+      app: rng
+  template:
+    metadata:
+      labels:
+        app: rng
+        enabled: "yes"
+    spec:
+      containers:
+        - image: dockercoins/rng:v0.1
+          name: rng
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -102,6 +122,7 @@ spec:
       targetPort: 80
   selector:
     app: rng
+    enabled: "yes"
   type: ClusterIP
 ---
 apiVersion: apps/v1
