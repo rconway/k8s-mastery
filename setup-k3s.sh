@@ -13,4 +13,6 @@ curl -Lo $HOME/.local/bin/kubectl https://storage.googleapis.com/kubernetes-rele
 sudo snap install kubectl --channel=1.17/stable --classic
 
 # Setup kube config
-sudo cat /etc/rancher/k3s/k3s.yaml > $HOME/.kube/config
+mkdir -p $HOME/.kube
+#sudo cat /etc/rancher/k3s/k3s.yaml > $HOME/.kube/config
+sudo k3s kubectl config view --raw > $HOME/.kube/config
