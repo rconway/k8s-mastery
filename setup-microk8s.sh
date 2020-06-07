@@ -24,6 +24,9 @@ curl -Lo $HOME/.local/bin/kubectl https://storage.googleapis.com/kubernetes-rele
 # Install specific version - v1.17
 sudo snap install kubectl --channel=1.17/stable --classic
 
+# kubectl config
+microk8s config >${HOME}/.kube/config
+
 # kubectl bash completion
 echo "source <(kubectl completion bash)" >>$HOME/.bash_completion
 
